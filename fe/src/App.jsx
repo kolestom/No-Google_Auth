@@ -1,26 +1,38 @@
 import { useState } from 'react'
 import './App.css'
-import axios from 'axios'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import RootLayout from './pages/RootLayout'
+import HomePage from './pages/Home'
+import SignupPage from './pages/Signup'
+import LoginPage from './pages/Login'
 
 function App() {
-  const [count, setCount] = useState(0)
-  const url = 'http://localhost:1122'
-
-  const publicHandler = async () =>{
-    const response = await axios.get(url + '/api/public')
-    console.log(response.data);
-  }
-
-  const privateHandler = async () =>{
-    const response = await axios.get(url + '/api/private')
-    console.log(response.data);
-  }
+  
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <RootLayout/>,
+      children: [
+        {
+          index: true,
+          element: <HomePage />
+        },
+        {
+          path: 'signup',
+          element: <SignupPage />
+        },
+        {
+          path: 'login',
+          element: <LoginPage/>
+        }
+      ]
+    }
+  ])
+  
 
   return (
-    <div className="App">
-      <button onClick={publicHandler}>Get public</button>
-      <button onClick={privateHandler}>Get private</button>
-    </div>
+    
+    <RouterProvider router={router}/>
   )
 }
 
