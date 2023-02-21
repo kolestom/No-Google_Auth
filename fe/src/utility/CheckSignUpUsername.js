@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const CheckUsername = async(username) => {
+const CheckSignUpUsername = async(username) => {
     const response = await axios.post(`http://localhost:1122/api/users/check_username`,
     {
         username
@@ -8,4 +8,4 @@ const CheckUsername = async(username) => {
     return response.data;
 }
  
-export default CheckUsername;
+export default CheckSignUpUsername;

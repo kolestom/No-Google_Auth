@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SignUpHandler from "../utility/SignUpHandler";
-import CheckUsername from "../utility/CheckUsername";
-import CheckEmail from "../utility/CheckEmail";
+import CheckSignUpUsername from "../utility/CheckSignUpUsername";
+import CheckSignUpEmail from "../utility/CheckSignUpEmail";
 import './Signup.css'
 
 
@@ -23,12 +23,19 @@ const SignupPage = () => {
     
     const usernameHandler = async(e) =>{
         setUsername(e)
-        setUsernameError(await CheckUsername(e)) 
+        setUsernameError(await CheckSignUpUsername(e)) 
     }
 
     const emailHandler = async(e) => {
         setEmail(e)
-        setEmailError(await CheckEmail(e))
+        setEmailError(await CheckSignUpEmail(e))
+    }
+
+    const sendSignUp =() =>{
+        SignUpHandler(username, email, password)
+        setUsername('')
+        setEmail('')
+        setPassword('')
     }
 
     return ( 
@@ -40,12 +47,7 @@ const SignupPage = () => {
                 <input type="text" placeholder="email" value={email} onChange={(e) => emailHandler(e.target.value)}/>
                 <span style={{display: emailError ? 'block' : 'none'}}>Email already in use</span>
                 <input type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-                <button onClick={() => {
-                    SignUpHandler(username, email, password)
-                    setUsername('')
-                    setEmail('')
-                    setPassword('')
-                    }} disabled={IsDisabled}>Sign Up</button>
+                <button onClick={sendSignUp} disabled={IsDisabled}>Sign Up</button>
             </div>
             <div>
                 <button onClick={()=>{navigate('/login')}}>To Login</button>
