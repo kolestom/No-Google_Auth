@@ -15,7 +15,7 @@ async function confirmEmail(email, username, code) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'Mikorka Kalman', // sender address
+    from: '"Winch Eszter" <>', // sender address
     to: `${email}`, // list of receivers
     subject: "Hello ✔", // Subject line
     text: `Hello ${username}?`, // plain text body

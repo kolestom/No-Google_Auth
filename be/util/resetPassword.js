@@ -14,12 +14,12 @@ async function resetPassword(email,username, code) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: 'Winch Eszter', // sender address
+    from: '"Winch Eszter" <>', // sender address
     to: `${email}`, // list of receivers
     subject: "Hello ✔", // Subject line
     text: `Hello ${username}?`, // plain text body
     html: `<b>Hello ${username}!</b><br />
-    <a href="http://localhost:5173/reset/?code=${code}&username=${username}" target="_blank">Click this link to confirm your email</a>`, // html body
+    <a href="http://localhost:5173/reset/?code=${code}&username=${username}" target="_blank">Click this link to reset your password</a>`, // html body
   });
 
   console.log("Message sent: %s", info.messageId);

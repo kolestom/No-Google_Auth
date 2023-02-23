@@ -17,8 +17,12 @@ const ConfirmPage = () => {
                 date: new Date().getTime()
             })
             console.log(resp.status);
-            setLoading(false)
-            navigate('/login')
+            setTimeout(()=>{
+                setLoading(false)
+            }, 2000)
+            setTimeout(()=>{
+                navigate('/login')
+            }, 2000)
         } catch (err) {
             alert('An error has occurred. Please, sign in again!')
             navigate('/signup')
@@ -32,7 +36,7 @@ const ConfirmPage = () => {
     return ( 
         <div>
             <h1>Confirm page</h1>
-            {loading && <h2>Loading</h2>}
+            {loading ? <h2>Loading</h2> : <h2>Confirmation received</h2>}
         </div>
      );
 }

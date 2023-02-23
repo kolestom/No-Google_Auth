@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import ResetPassword from "../utility/ResetHandler"
 
 
@@ -11,14 +11,15 @@ const Reset = ()=>{
     const username = urlSearchParams.get("username")
 
     const sendNewPassword = async ()=>{
-        try{
+        
             const res = await ResetPassword(newPassword,username,code)
-            alert('Password has been changed')
-            navigate("/login")
-        }catch(err){
-            alert('An error has occurred. Please, try it again!')
-            navigate("/forgot")
-        }     
+            if (res === 200) {
+                alert('Password has been changed')
+                navigate("/login")
+            } else {
+                alert('An error has occurred. Please, try it again!')
+                navigate("/forgot")
+            }
     }
 
     return(
@@ -27,6 +28,7 @@ const Reset = ()=>{
         <div>
             <input type="password" placeholder='new password' value={newPassword} onChange={(e) => setNewPassword(e.target.value)}/>
             <button onClick={sendNewPassword}>Reset password</button>
+            <button onClick={()=>{navigate('/login')}}>To Login</button>
         </div>
     </div>
     )

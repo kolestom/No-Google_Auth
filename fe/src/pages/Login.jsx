@@ -16,8 +16,24 @@ const LoginPage = () => {
     
 
     const sendLogin = async() => {
-        setToken(await LoginHandler(username, password))
-        
+        const resp = await LoginHandler(username, password)
+        if(resp.status !== 200) {
+            setUsername('')
+            setPassword('')
+            return alert('Login failed')
+        }
+        setToken(resp.data)
+    }
+
+    const logOut = () => {
+        setLoggedInUser('')
+        setToken('')
+        setUsername('')
+        setPassword('')
+    }
+
+    const privHandler = () =>{
+        PrivPubHandler('private', token, setLoggedInUser, setToken)
     }
 
     useEffect(()=> {
@@ -25,8 +41,8 @@ const LoginPage = () => {
             setLoggedInUser(jwt_decode(token))
         }
     },[token])
-    console.log('Login', token);
-    console.log('LoggedinUser', loggedInUser);
+    // console.log('Login', token);
+    // console.log('LoggedinUser', loggedInUser);
 
 
     return ( 
@@ -38,15 +54,16 @@ const LoginPage = () => {
                 <input type="text" placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <input type="password" placeholder='password' value={password} onChange={(e)=> setPassword(e.target.value)}/>
                 <button onClick={sendLogin}>Log in</button>
+                <button style={{display: loggedInUser ? 'inline' : 'none'}} onClick={logOut}>Log out</button>
             </div>
             <div>
                 <button onClick={()=>{PrivPubHandler('public', token)}}>Get public</button>
-                <button style={{display: loggedInUser ? 'inline' : 'none'}} onClick={()=>{PrivPubHandler('private', token)}}>Get private</button>
+                <button style={{display: loggedInUser ? 'inline' : 'none'}} onClick={privHandler}>Get private</button>
             </div>
             <div>
                 <button onClick={()=>{navigate('/signup')}}>To Sign up</button>
                 <button onClick={()=>{navigate('/')}}>To Home</button>
-                <button onClick={()=>{navigate('/forgot')}}>Forgot password</button>
+                <button style={{display: loggedInUser ? 'none' : 'inline'}} onClick={()=>{navigate('/forgot')}}>Forgot password</button>
             </div>
         </div>
      );

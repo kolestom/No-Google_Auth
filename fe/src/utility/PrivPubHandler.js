@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const PrivPubHandler = async(ending, token) => {
+const PrivPubHandler = async(ending, token, setLoggedInUser, setToken) => {
     if (ending === "public") {
         const response = await axios.get(`http://localhost:1122/api/words/${ending}`)
     
@@ -19,6 +19,8 @@ const PrivPubHandler = async(ending, token) => {
         } catch (error) {
             console.log(error.message)
             alert("Session expired. Please, log in again.")
+            setLoggedInUser('')
+            setToken('')
         }
     }
 

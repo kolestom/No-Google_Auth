@@ -12,7 +12,7 @@ const ResetPassword = async (newPassword,username,code) => {
             }
             )
             console.log(response)
-            return response.data;
+            return response.status;
 
         } catch (err) {
             console.log(err.response.status);
