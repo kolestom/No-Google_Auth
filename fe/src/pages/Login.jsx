@@ -46,6 +46,7 @@ const LoginPage = () => {
             <div>
                 <button onClick={()=>{navigate('/signup')}}>To Sign up</button>
                 <button onClick={()=>{navigate('/')}}>To Home</button>
+                <button onClick={()=>{navigate('/forgot')}}>Forgot password</button>
             </div>
         </div>
      );

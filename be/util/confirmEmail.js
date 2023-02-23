@@ -8,8 +8,8 @@ async function confirmEmail(email, username, code) {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: "arnyekcodecool@gmail.com", // generated ethereal user
-        pass: "obelvztepmswrroi", // generated ethereal password
+        user: "arnyekcodecool2@gmail.com", // generated ethereal user
+        pass: "wvkwnwkkiqqbiqvv", // generated ethereal password
       },
   });
 

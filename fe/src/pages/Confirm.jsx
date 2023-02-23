@@ -12,7 +12,7 @@ const ConfirmPage = () => {
     const sendConfirmation = async () => {
         try {
             const resp = await axios.post('http://localhost:1122/api/users/confirm', {
-                code: code,
+                code,
                 username,
                 date: new Date().getTime()
             })

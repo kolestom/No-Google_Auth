@@ -6,6 +6,8 @@ import HomePage from './pages/Home'
 import SignupPage from './pages/Signup'
 import LoginPage from './pages/Login'
 import ConfirmPage from './pages/Confirm'
+import ForgotPage from './pages/Forgot'
+import ResetPage from './pages/ResetPage'
 
 function App() {
   
@@ -29,6 +31,14 @@ function App() {
         {
           path: 'confirm',
           element: <ConfirmPage/>
+        },
+        {
+          path: 'forgot',
+          element: <ForgotPage/>
+        },
+        {
+          path: 'reset',
+          element: <ResetPage/>
         }
       ]
     }

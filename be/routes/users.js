@@ -4,6 +4,7 @@ const User = require('../models/UserSchema')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const confirmEmail = require('../util/confirmEmail')
+const resetPassword = require('../util/resetPassword')
 const {randomBytes} = require('node:crypto');
 
 
@@ -78,6 +79,31 @@ router.post('/confirm', async (req, res) => {
     await User.updateOne({username: req.body.username}, { $set: { 'confirmation.confirmed': true }})
     res.sendStatus(200)
     
+  })
+  
+router.post('/reset',async (req,res)=>{
+  const confirmResetCode = randomBytes(8).toString('hex');
+  const [user] = await User.find({username:req.body.username})
+  console.log(user)
+  if(!user) res.sendStatus(403)
+  try{
+    await User.updateOne({username: req.body.username}, { $set: {'reset':{'date':new Date().getTime(),'code':confirmResetCode}} })
+    resetPassword(user.email,user.username,confirmResetCode)
+    res.send(201)
+  }catch(err){
+    res.sendStatus(400)
+  }
+})
+
+router.post('/password',async (req,res)=>{
+  const [user]= await User.find({username:req.body.username})
+  console.log(user)
+  console.log(req.body)
+  if (!user || !(req.body.date < user.reset.date + 300000 || req.body.code !== user.reset.code)) return res.sendStatus(403)
+  const hashedPassword = await bcrypt.hash(req.body.newPassword, saltRounds)
+  console.log(hashedPassword)
+  await User.updateOne({username: req.body.username}, { $set:{"password":hashedPassword} })
+  res.send(200)
 })
 
 module.exports = router

@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
         date: Number,
         code: String,
         confirmed: Boolean
+    },
+    reset:{
+        date:Number,
+        code:String
     }
 })
 module.exports = mongoose.model('User', userSchema)
