@@ -3,24 +3,28 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 const port = 1122
-const Word = require('./models/WordSchema')
 const userRoutes = require('./routes/users')
+const wordRoutes = require('./routes/words')
+
 
 app.use(cors())
 app.use(express.json())
 app.use('/api/users', userRoutes)
+app.use('/api/words', wordRoutes)
 
-mongoose.connect('mongodb+srv://hospitalsDB:hospitalsDB2023@hospital.shz8y3u.mongodb.net/NoGoogleAuth', ()=> console.log('MongoDB connected'))
 
-app.get('/api/public', async (req, res) => {
-    res.send(await Word.find({content: 'public'}))
-    // res.send('public')
-})
 
-app.get('/api/private',async (req, res) => {
-    res.send(await Word.find({content: 'private'}))
-})
 
-app.listen(port, () => {
-    console.log(`Megy a szerver a ${port}-es porton a No-Google feladathoz` )
-})
+mongoose.set('strictQuery', false)
+
+mongoose.connect('mongodb+srv://hospitalsDB:hospitalsDB2023@hospital.shz8y3u.mongodb.net/NoGoogleAuth')
+  .then(() => {
+    console.log('Connected to MongoDB');
+
+    app.listen(port,()=>{
+        console.log(`Megy a szerver a ${port}-es porton a No-Google feladathoz`)
+    })   
+  })
+  .catch((error) => {
+    console.log('Error connecting to MongoDB', error);
+  });

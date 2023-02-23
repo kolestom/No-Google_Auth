@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema
-
-const wordSchema = new Schema({
+const wordSchema = new mongoose.Schema({
     content: String
 })
 

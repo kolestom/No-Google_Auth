@@ -5,6 +5,7 @@ import RootLayout from './pages/RootLayout'
 import HomePage from './pages/Home'
 import SignupPage from './pages/Signup'
 import LoginPage from './pages/Login'
+import ConfirmPage from './pages/Confirm'
 
 function App() {
   
@@ -24,6 +25,10 @@ function App() {
         {
           path: 'login',
           element: <LoginPage/>
+        },
+        {
+          path: 'confirm',
+          element: <ConfirmPage/>
         }
       ]
     }

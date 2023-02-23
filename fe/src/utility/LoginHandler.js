@@ -8,8 +8,8 @@ const LoginHandler = async (username, password) => {
                 password
             }
             )
-            console.log(response.status);
-            return response.status;
+            return response.data;
+
         } catch (err) {
             console.log(err.response.status);
             return err.response.status
