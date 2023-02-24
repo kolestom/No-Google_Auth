@@ -8,14 +8,14 @@ async function confirmEmail(email, username, code) {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: "", // generated ethereal user
-        pass: "", // generated ethereal password
+        user: "arnyekcodecool2@gmail.com", // generated ethereal user
+        pass: "wvkwnwkkiqqbiqvv", // generated ethereal password
       },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Winch Eszter" <>', // sender address
+    from: '"Winch Eszter" <arnyekcodecool2@gmail.com>', // sender address
     to: `${email}`, // list of receivers
     subject: "Hello ✔", // Subject line
     text: `Hello ${username}?`, // plain text body

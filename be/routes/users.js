@@ -63,15 +63,16 @@ router.post('/login', async(req, res) => {
     try {
         const [user] = await User.find({username: req.body.username})
         if(!user) return res.sendStatus(401)
+        if(!user.confirmation.confirmed) res.sendStatus(403)
         bcrypt.compare(req.body.password, user.password, (err, result) =>{
             const token = jwt.sign({ id: user._id, username: user.username }, secretKey, {expiresIn: '10s'});
             result ? res.send(token) : res.sendStatus(404)
-        })
-        
+        })    
     } catch (err) {
         res.send(err.message)
     }
 })
+
 
 router.post('/confirm', async (req, res) => {
     const [user] = await User.find({username: req.body.username})

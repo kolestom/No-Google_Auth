@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 
 const ConfirmPage = () => {
@@ -8,6 +8,7 @@ const ConfirmPage = () => {
     const urlSearchParams = new URLSearchParams(window.location.search)
     const code = urlSearchParams.get("code")
     const username = urlSearchParams.get("username")
+    
     
     const sendConfirmation = async () => {
         try {
@@ -27,11 +28,11 @@ const ConfirmPage = () => {
             alert('An error has occurred. Please, sign in again!')
             navigate('/signup')
         }
-
-
     }
-
-    sendConfirmation()
+    
+    useEffect(()=>{
+        sendConfirmation()
+    },[])
 
     return ( 
         <div>

@@ -41,7 +41,7 @@ const LoginPage = () => {
             setLoggedInUser(jwt_decode(token))
         }
     },[token])
-    // console.log('Login', token);
+    // console.log('token', token);
     // console.log('LoggedinUser', loggedInUser);
 
 
