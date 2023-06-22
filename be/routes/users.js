@@ -8,11 +8,6 @@ const resetPassword = require('../util/resetPassword')
 const {randomBytes} = require('node:crypto');
 
 
-
-
-
-const saltRounds = 10
-
 router.post('/check_username', async (req, res) =>{
     
     const user = await User.find({username: req.body.username})
@@ -33,7 +28,7 @@ router.post('/check_email', async (req, res) =>{
 router.post('/signup',  async(req, res) => {
     confirmCode = randomBytes(8).toString('hex');
     
-    bcrypt.hash(req.body.password, saltRounds, async (err, hash) => {
+    bcrypt.hash(req.body.password, parseInt(process.env.SALT_ROUNDS), async (err, hash) => {
       if (err) return res.sendStatus(500);
 
       try {
@@ -98,7 +93,7 @@ router.post('/reset',async (req,res)=>{
 router.post('/password',async (req,res)=>{
   const [user]= await User.find({username:req.body.username})
   if (!user || !(req.body.date < user.reset.date + 300000 || req.body.code !== user.reset.code)) return res.sendStatus(403)
-  const hashedPassword = await bcrypt.hash(req.body.newPassword, saltRounds)
+  const hashedPassword = await bcrypt.hash(req.body.newPassword, parseInt(process.env.SALT_ROUNDS))
   await User.updateOne({username: req.body.username}, { $set:{"password":hashedPassword} })
   res.sendStatus(200)
 })
