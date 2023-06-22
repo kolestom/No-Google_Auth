@@ -12,7 +12,6 @@ const {randomBytes} = require('node:crypto');
 
 
 const saltRounds = 10
-const secretKey = "secret"
 
 router.post('/check_username', async (req, res) =>{
     
@@ -65,7 +64,7 @@ router.post('/login', async(req, res) => {
         if(!user) return res.sendStatus(401)
         if(!user.confirmation.confirmed) res.sendStatus(403)
         bcrypt.compare(req.body.password, user.password, (err, result) =>{
-            const token = jwt.sign({ id: user._id, username: user.username }, secretKey, {expiresIn: '10s'});
+            const token = jwt.sign({ id: user._id, username: user.username }, process.env.SECRET_KEY, {expiresIn: '10s'});
             result ? res.send(token) : res.sendStatus(404)
         })    
     } catch (err) {

@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken')
-const secretKey= "secret"
 
 const authMiddleWare = (req, res, next) =>{
     const token = req.headers.authorization.replace('Bearer: ', '');
-    if (!token) return next()
+    if (!token) return res.sendStatus(401)
     try {
-        const decoded = jwt.verify(token, secretKey);
+        const decoded = jwt.verify(token, process.env.SECRET_KEY);
         res.locals.username = decoded.username
         next()
-    } catch {
-        next()
+    } catch(err) {
+        console.log(err);
+        return res.sendStatus(403)
     }
 }
 

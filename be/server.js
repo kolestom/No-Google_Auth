@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
@@ -17,7 +18,7 @@ app.use('/api/words', wordRoutes)
 
 mongoose.set('strictQuery', false)
 
-mongoose.connect('mongodb+srv://hospitalsDB:hospitalsDB2023@hospital.shz8y3u.mongodb.net/NoGoogleAuth')
+mongoose.connect(process.env.MONGO_URL)
   .then(() => {
     console.log('Connected to MongoDB');
 
