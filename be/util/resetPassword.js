@@ -7,14 +7,14 @@ async function resetPassword(email,username, code) {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-        user: "arnyekcodecool2@gmail.com", // generated ethereal user
-        pass: "wvkwnwkkiqqbiqvv", // generated ethereal password
+        user: process.env.EMAILER.split(' ')[2].replace('<', ''). replace('>', ''), // generated ethereal user
+        pass: process.env.EMAILER_PW, // generated ethereal password
       },
   });
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"Winch Eszter" <arnyekcodecool2@gmail.com>', // sender address
+    from: process.env.EMAILER, // sender address
     to: `${email}`, // list of receivers
     subject: "Hello ✔", // Subject line
     text: `Hello ${username}?`, // plain text body
